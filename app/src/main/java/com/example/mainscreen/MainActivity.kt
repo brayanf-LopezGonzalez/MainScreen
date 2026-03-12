@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mainscreen.screens.LoginScreen
 import com.example.mainscreen.screens.MainScreen
 import com.example.mainscreen.ui.theme.MainScreenTheme
+import com.example.mainscreen.screens.RegisterScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,11 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("login") {
-                            LoginScreen()
+                            LoginScreen(navController)
+                        }
+
+                        composable("register") {
+                            RegisterScreen(navController)
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package com.example.mainscreen.screens
 
+import android.provider.ContactsContract
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,11 +28,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavController
+) {
+
+    /* estados */
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var emailError by remember {mutableStateOf(false)}
+
+    var title by remember { mutableStateOf("Hello!") }
+
+    fun isValidEmail (email: String): Boolean{
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
 
     Box(
         modifier = Modifier
@@ -45,10 +59,33 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                contentAlignment = Alignment.TopStart
+            ) {
+                Button(
+                    onClick = {
+                        navController.navigateUp()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.Blue
+                    )
+                ) {
+                    Text(
+                        text = "← Back",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(150.dp))
 
             Text(
-                text = "Hello!",
+                text =  title /*"Hello!"*/,
                 fontSize = 50.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
@@ -70,19 +107,22 @@ fun LoginScreen() {
 
             TextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = { email = it
+                                emailError = !isValidEmail(email = it)},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),
                 placeholder = { Text("Email") },
                 singleLine = true,
                 shape = RoundedCornerShape(8.dp),
+                isError = emailError,
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White,
                     focusedIndicatorColor = Color.Blue,
                     unfocusedIndicatorColor = Color.Gray,
                     cursorColor = Color.Blue
+
                 )
             )
 
@@ -102,6 +142,7 @@ fun LoginScreen() {
                     unfocusedIndicatorColor = Color.Gray,
                     cursorColor = Color.Blue
                 )
+
             )
 
             Button(
@@ -110,8 +151,8 @@ fun LoginScreen() {
                     .fillMaxWidth()
                     .height(50.dp)
                     .clip(RoundedCornerShape(8.dp)),
-                shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Blue
                 )
             ) {

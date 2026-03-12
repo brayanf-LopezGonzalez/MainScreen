@@ -99,7 +99,9 @@ fun MainScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(12.dp))
 
             OutlinedButton(
-                onClick = { },
+                onClick = {
+                    navController.navigate("register")
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
