@@ -1,13 +1,12 @@
 package com.example.mainscreen
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-
-import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,31 +21,26 @@ import com.example.mainscreen.screens.RegisterScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()//full screen whitout margins
+        enableEdgeToEdge()
 
         setContent {
             MainScreenTheme {
                 val navController = rememberNavController()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
                     NavHost(
                         navController = navController,
                         startDestination = "main",
                         modifier = Modifier.padding(innerPadding)
                     ) {
+                        composable("main")
+                        { MainScreen(navController) }
 
-                        composable("main") {
-                            MainScreen(navController)
-                        }
+                        composable("login")
+                        { LoginScreen(navController) }
 
-                        composable("login") {
-                            LoginScreen(navController)
-                        }
-
-                        composable("register") {
-                            RegisterScreen(navController)
-                        }
+                        composable("register")
+                        { RegisterScreen(navController) }
                     }
                 }
             }

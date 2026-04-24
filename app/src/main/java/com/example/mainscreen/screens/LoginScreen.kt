@@ -1,6 +1,5 @@
 package com.example.mainscreen.screens
 
-import android.provider.ContactsContract
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
